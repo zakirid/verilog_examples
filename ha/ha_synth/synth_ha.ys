@@ -1,0 +1,12 @@
+read_liberty -lib sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog ha.v
+synth -top ha
+#dfflibmap -liberty sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty sky130_fd_sc_hd__tt_025C_1v80.lib
+clean
+write_verilog -noattr ha_netlist.v
+write_json ha.json
+tee -o ha.rpt stat -liberty sky130_fd_sc_hd__tt_025C_1v80.lib
+!netlistsvg ha.json -o ha.svg
+show -prefix ./ha.netlist -format jpeg
+#!dot -Tpng netlist.dot -o netlist.png
